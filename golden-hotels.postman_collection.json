@@ -1,0 +1,615 @@
+{
+  "info": {
+    "_postman_id": "db710d64-1d80-4f69-8bcd-27676fa8b450",
+    "name": "Basic",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50173387"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();\r",
+                  "let token = jsonData.access_token;\r",
+                  "pm.collectionVariables.set(\"access_token\", token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlybXpzYmx5Ym93YXB6dHVia21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MTA4NTEsImV4cCI6MjEwMzA4Njg1MX0.5YIb_UtzRLCn8VoFbSHW3uiqCTRJlyuqkAvrJTefTdM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"nubila@infinitecodetech.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://irmzsblybowapztubkmn.supabase.co/auth/v1/token?grant_type=password",
+              "protocol": "https",
+              "host": [
+                "irmzsblybowapztubkmn",
+                "supabase",
+                "co"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unsuccessful Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Upon entering wrong credential, system should block login\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.msg).includes(\"Invalid login credentials\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlybXpzYmx5Ym93YXB6dHVia21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MTA4NTEsImV4cCI6MjEwMzA4Njg1MX0.5YIb_UtzRLCn8VoFbSHW3uiqCTRJlyuqkAvrJTefTdM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"nubila@infinitecodetech.com\",\r\n  \"password\": \"1234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://irmzsblybowapztubkmn.supabase.co/auth/v1/token?grant_type=password",
+              "protocol": "https",
+              "host": [
+                "irmzsblybowapztubkmn",
+                "supabase",
+                "co"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User List",
+      "item": [
+        {
+          "name": "User List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlybXpzYmx5Ym93YXB6dHVia21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MTA4NTEsImV4cCI6MjEwMzA4Njg1MX0.5YIb_UtzRLCn8VoFbSHW3uiqCTRJlyuqkAvrJTefTdM",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "bearer eyJhbGciOiJFUzI1NiIsImtpZCI6Ijk4ZjU4MWMzLWE5NTMtNGUzMS04NDdlLWU1OWY4NzM0YWEyZCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lybXpzYmx5Ym93YXB6dHVia21uLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJjNzc2YTM0Yi0xNzAxLTQyZDctOWY2Yy0zOTUyZmU5NGU3ZGEiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMzUwOTUyLCJpYXQiOjE3OTAzNDczNTIsImVtYWlsIjoibnViaWxhQGluZmluaXRlY29kZXRlY2guY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZnVsbF9uYW1lIjoiTnViaWxhIE51c2hpbiAoU1FBKSIsInBob25lIjoiMDE4Mzc2ODY4NjAiLCJyb2xlIjoiU1VQRVJfQURNSU4ifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDM0NzM1Mn1dLCJzZXNzaW9uX2lkIjoiY2M4N2JkMzctMGI4ZS00ZDZkLWIzNzgtYTExNzk5YWY1MTlhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.QqYEn5iCI7l0bDMHkis9lBIUbfHTRUB07TJBt-UIo5GOHW1wmUzzI9mgOPX4_9tVFjy5q8jy36oUtvNFu0OqmQ",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://irmzsblybowapztubkmn.supabase.co/rest/v1/profiles?select=*",
+              "protocol": "https",
+              "host": [
+                "irmzsblybowapztubkmn",
+                "supabase",
+                "co"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "profiles"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reservation List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://irmzsblybowapztubkmn.supabase.co/rest/v1/reservations?select=hotel_name&is_archived=eq.false&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlybXpzYmx5Ym93YXB6dHVia21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MTA4NTEsImV4cCI6MjEwMzA4Njg1MX0.5YIb_UtzRLCn8VoFbSHW3uiqCTRJlyuqkAvrJTefTdM&Authorization=Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6Ijk4ZjU4MWMzLWE5NTMtNGUzMS04NDdlLWU1OWY4NzM0YWEyZCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lybXpzYmx5Ym93YXB6dHVia21uLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJjNzc2YTM0Yi0xNzAxLTQyZDctOWY2Yy0zOTUyZmU5NGU3ZGEiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMzUwOTA5LCJpYXQiOjE3OTAzNDczMDksImVtYWlsIjoibnViaWxhQGluZmluaXRlY29kZXRlY2guY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZnVsbF9uYW1lIjoiTnViaWxhIE51c2hpbiAoU1FBKSIsInBob25lIjoiMDE4Mzc2ODY4NjAiLCJyb2xlIjoiU1VQRVJfQURNSU4ifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDM0NzMwOX1dLCJzZXNzaW9uX2lkIjoiNGM0Zjg5YjEtZjY0ZS00ZjBlLWIxOTctMDY5OGI2NTJkYmI1IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.wQipi1jVY5kpjmK5AI5mQFJofBzEP4Bch6c4EuF8e2rauN4TxebW8djoSx3cd5MI_MTVupMpAfNbfawdsDFBmw",
+              "protocol": "https",
+              "host": [
+                "irmzsblybowapztubkmn",
+                "supabase",
+                "co"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "reservations"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "hotel_name"
+                },
+                {
+                  "key": "is_archived",
+                  "value": "eq.false"
+                },
+                {
+                  "key": "apikey",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlybXpzYmx5Ym93YXB6dHVia21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MTA4NTEsImV4cCI6MjEwMzA4Njg1MX0.5YIb_UtzRLCn8VoFbSHW3uiqCTRJlyuqkAvrJTefTdM",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6Ijk4ZjU4MWMzLWE5NTMtNGUzMS04NDdlLWU1OWY4NzM0YWEyZCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lybXpzYmx5Ym93YXB6dHVia21uLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJjNzc2YTM0Yi0xNzAxLTQyZDctOWY2Yy0zOTUyZmU5NGU3ZGEiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMzUwOTA5LCJpYXQiOjE3OTAzNDczMDksImVtYWlsIjoibnViaWxhQGluZmluaXRlY29kZXRlY2guY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZnVsbF9uYW1lIjoiTnViaWxhIE51c2hpbiAoU1FBKSIsInBob25lIjoiMDE4Mzc2ODY4NjAiLCJyb2xlIjoiU1VQRVJfQURNSU4ifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDM0NzMwOX1dLCJzZXNzaW9uX2lkIjoiNGM0Zjg5YjEtZjY0ZS00ZjBlLWIxOTctMDY5OGI2NTJkYmI1IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.wQipi1jVY5kpjmK5AI5mQFJofBzEP4Bch6c4EuF8e2rauN4TxebW8djoSx3cd5MI_MTVupMpAfNbfawdsDFBmw",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search User",
+      "item": [
+        {
+          "name": "Search User",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Search User with wrong user id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Body matches string\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{apikey}}",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rest/v1/profiles?id=eq.0b46dacc-e85e-434b-a87b-2488396ce43f&select=*",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "profiles"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.0b46dacc-e85e-434b-a87b-2488396ce43f"
+                },
+                {
+                  "key": "select",
+                  "value": "*"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search User with wrong API Key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Body matches string\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{apikey}}",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "wrong bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rest/v1/profiles?id=eq.0b46dacc-e85e-434b-a87b-2488396ce43f&select=*",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "profiles"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.0b46dacc-e85e-434b-a87b-2488396ce43f"
+                },
+                {
+                  "key": "select",
+                  "value": "*"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Create User",
+      "item": [
+        {
+          "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();\r",
+                  "let userId = jsonData.user.id;\r",
+                  "let userEmail = jsonData.user.email;\r",
+                  "let userName = jsonData.user.full_name;\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"userId\", userId);\r",
+                  "pm.collectionVariables.set(\"userEmail\", userEmail);\r",
+                  "pm.collectionVariables.set(\"phoneNumber\", phoneNumber);\r",
+                  "pm.collectionVariables.set(\"userName\", userName);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let randomId = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;",
+                  "let prefix = \"01701\";",
+                  "let phoneNumber = prefix + randomId;",
+                  "",
+                  "console.log(phoneNumber);",
+                  "pm.collectionVariables.set(\"phoneNumber\", phoneNumber);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\t\"id\": \"1e0d6782-c5a9-4237-845b-0b5f51668f48\",\r\n\t\t\"aud\": \"authenticated\",\r\n\t\t\"role\": \"STAFF\",\r\n\t\t\"email\": \"{{$randomEmail}}\",\r\n\t\t\"phone\": \"{{phoneNumber}}\",\r\n        \"full_name\": \"{{$randomName}}\"\r\n\t\r\n\t}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://agent.goldenhotelsgroup.com/api/admin/users",
+              "protocol": "https",
+              "host": [
+                "agent",
+                "goldenhotelsgroup",
+                "com"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Duplicate User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();\r",
+                  "let userId = jsonData.user.id;\r",
+                  "let userEmail = jsonData.user.email;\r",
+                  "let userName = jsonData.user.full_name;\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"userId\", userId);\r",
+                  "pm.collectionVariables.set(\"userEmail\", userEmail);\r",
+                  "pm.collectionVariables.set(\"phoneNumber\", phoneNumber);\r",
+                  "pm.collectionVariables.set(\"userName\", userName);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let randomId = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;",
+                  "let prefix = \"01701\";",
+                  "let phoneNumber = prefix + randomId;",
+                  "",
+                  "console.log(phoneNumber);",
+                  "pm.collectionVariables.set(\"phoneNumber\", phoneNumber);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\t\"id\": \"1e0d6782-c5a9-4237-845b-0b5f51668f48\",\r\n\t\t\"aud\": \"authenticated\",\r\n\t\t\"role\": \"STAFF\",\r\n\t\t\"email\": \"{{$randomEmail}}\",\r\n\t\t\"phone\": \"{{phoneNumber}}\",\r\n        \"full_name\": \"{{$randomName}}\"\r\n\t\r\n\t}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://agent.goldenhotelsgroup.com/api/admin/users",
+              "protocol": "https",
+              "host": [
+                "agent",
+                "goldenhotelsgroup",
+                "com"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Delete User",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\t\"id\": \"1092dc39-dfa8-4599-be67-f77db39fb4f6\",\r\n\t\t\"aud\": \"authenticated\",\r\n\t\t\"role\": \"STAFF\",\r\n\t\t\"email\": \"fabien@gmail.com\",\r\n\t\t\"phone\": \"01690789456\",\r\n        \"full_name\": \"Fabien\"\r\n\t\r\n\t}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://agent.goldenhotelsgroup.com/api/admin/users",
+          "protocol": "https",
+          "host": [
+            "agent",
+            "goldenhotelsgroup",
+            "com"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "apikey",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "userEmail",
+      "value": ""
+    },
+    {
+      "key": "phoneNumber",
+      "value": ""
+    },
+    {
+      "key": "userName",
+      "value": ""
+    }
+  ]
+}
